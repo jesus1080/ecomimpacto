@@ -106,6 +106,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Directorio para templates
+
+STATICFILES_DIRS = ['static/']
+
 # Directorio para img
 
 MEDIA_URL = 'media/'
