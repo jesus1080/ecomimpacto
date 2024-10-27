@@ -1,11 +1,22 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
+
+
+def category(request, cate): 
+    try:
+        category = Category.objects.get(name=cate)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category.html', {'productos':products, 'category':category})
+    except:
+        messages.success(request, ("La categoria no existe"))
+        return redirect('home')
+    
 
 def product(request,pk):
     product = Product.objects.get(id=pk)
