@@ -15,7 +15,7 @@
                         <span class="text-decoration-line-through">${{ product.price}}</span>
                         <span>${{ product.sale_price }}</span>
                     {% else %}
-                        <span>{{ product.price }}</span>
+                        <span>${{ product.price }}</span>
                     {% endif %}
                     
                     
@@ -23,7 +23,7 @@
                 <p class="lead"> {{ product.description }}</p>
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button" value="{{ product.id }}" id="addCart">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
@@ -138,5 +138,29 @@
         </div>
     </div>
 </section>
+
+<script>
+    // verificar si el boton de carrito esta presionado 
+    $(document).on('click', '#addCart', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_add" %}',
+            data: {
+                product_id: $('#addCart').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                console.log(json)
+            },
+
+            error: function(xhr, errmsg, err){
+                console.log("Error: " + errmsg);
+            },
+        });
+    })
+</script>
 
 {% endblock %}
