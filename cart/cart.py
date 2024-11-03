@@ -1,3 +1,5 @@
+from store.models import Product
+
 class Cart():
     def __init__(self, request):
         self.session = request.session
@@ -23,3 +25,12 @@ class Cart():
 
 
         self.session.modified = True
+
+    def __len__(self):
+        return len(self.cart)
+    
+    def get_prods(self):
+        product_ids = self.cart.keys()
+        # Buscar productos de la lista de card en la DB
+        products = Product.objects.filter(id__in=product_ids)
+        return products

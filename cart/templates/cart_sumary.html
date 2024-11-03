@@ -10,5 +10,40 @@
                 </div>
             </div>
         </header>
+        <div class="container my-5">
+            <h2 class="mb-4">Carrito de Compras</h2>
+            
+            <!-- Lista de productos -->
+            {% if products%}
+                {% for producto in products %}
+                    <div class="list-group mb-4">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <img src="{{ producto.image.url }}" alt="Producto 1" class="img-thumbnail me-3" style="width: 60px; height: 60px;">
+                            <div>
+                                <h5 class="mb-1">{{producto.name}}</h5>
+                                <small>Precio: ${{producto.price}}</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <!-- Cambiar cantidad -->
+                                <input type="number" class="form-control me-2" value="1" min="1" style="width: 80px;">
+                                
+                                <!-- Eliminar producto -->
+                                <!-- <span class="ms-3">$20.00</span> -->
+                            </div>
+                            <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                            
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5>Total: $80.00</h5>
+                    <button class="btn btn-outline-dark mt-auto">Proceder a la compra</button>
+                </div>
+            {% else %}
+                <h5 class="mb-1">No hay nada en tu carrito de compras...</h5> 
+            {% endif %}
+            <!-- Total y botón de compra -->
+           
+        </div>
   <br><br><br><br><br><br>      
  {% endblock %}

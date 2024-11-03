@@ -21,6 +21,7 @@
                     
                 </div>
                 <p class="lead"> {{ product.description }}</p>
+                <p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut auctor nec augue et dictum. Vivamus placerat aliquet lobortis. Donec cursus, odio eu pharetra volutpat, magna metus convallis augue, in mollis lacus diam id nulla. Curabitur ornare eros et neque euismod rhoncus. Maecenas rhoncus, justo et dignissim accumsan, ipsum ante suscipit lacus, ut vehicula velit est at lorem. Donec metus tortor, mollis non urna nec, tincidunt laoreet ante. Vestibulum ut urna nibh. Cras ultricies mi sit amet eros rhoncus, eu pellentesque augue blandit. Donec mollis urna sed tincidunt mattis. Phasellus vel erat elementum, rhoncus nunc ac, varius augue. Vestibulum aliquam urna vitae feugiat ullamcorper.</p>
                 <div class="d-flex">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
                     <button class="btn btn-outline-dark flex-shrink-0" type="button" value="{{ product.id }}" id="addCart">
@@ -153,7 +154,9 @@
             },
 
             success: function(json){
-                console.log(json)
+                //console.log(json)
+                document.getElementById("cart_quantity").
+                    textContent = json.qty
             },
 
             error: function(xhr, errmsg, err){
