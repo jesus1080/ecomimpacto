@@ -25,7 +25,12 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <!-- Cambiar cantidad -->
-                                <input type="number" class="form-control me-2" value="1" min="1" style="width: 80px;">
+                                 {% for key, value in quantities.items %}
+                                    {% if key == producto.id|slugify %}
+                                        <input type="number" class="form-control me-2" value="{{ value }}" min="1" style="width: 80px;" id="qty-cart">
+                                    {% endif %}
+                                 {% endfor %}
+                                
                                 
                                 <!-- Eliminar producto -->
                                 <!-- <span class="ms-3">$20.00</span> -->

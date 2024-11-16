@@ -15,13 +15,14 @@ class Cart():
         # estar seguro que cart es valido en todas las paginas del sitio
         self.cart = cart
 
-    def add(self, product):
+    def add(self, product, quantity):
         product_id = str(product.id)
-
+        product_qty = quantity
         if product_id in self.cart:
             pass
         else:
-            self.cart[product_id] = {'price': str(product.price)}
+            #self.cart[product_id] = {'price': str(product.price)}
+            self.cart[product_id] = int(product_qty)
 
 
         self.session.modified = True
@@ -34,3 +35,7 @@ class Cart():
         # Buscar productos de la lista de card en la DB
         products = Product.objects.filter(id__in=product_ids)
         return products
+
+    def get_quants(self):
+        quentities = self.cart
+        return quentities
