@@ -36,7 +36,7 @@
                                 <!-- <span class="ms-3">$20.00</span> -->
                             </div>
                             <button type="button", data-index="{{producto.id}}" class="btn btn-secondary upadte-cart">Update</button>
-                            <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+                            <a href="#" class="text-danger delete-product" data-index="{{producto.id}}"><i class="bi bi-trash-fill"></i></a>
                             
                         </div>
                     </div>
@@ -55,7 +55,7 @@
 
 
   <script>
-    // verificar si el boton de carrito esta presionado 
+    // actualizar cantidad de producto
     $(document).on('click', '.upadte-cart', function(e){
         e.preventDefault();
 
@@ -67,6 +67,35 @@
             data: {
                 product_id: productid,
                 product_qty: productQty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                //document.getElementById("cart_quantity").
+                    //textContent = json.qty
+                    location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+                console.log("Error: " + errmsg);
+            },
+        });
+    })
+
+    // eliminar producto del carrito
+    $(document).on('click', '.delete-product', function(e){
+        e.preventDefault();
+
+        var productid = $(this).data('index');
+       
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_delete" %}',
+            data: {
+                product_id: productid,
+                
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
