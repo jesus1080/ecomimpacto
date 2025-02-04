@@ -27,7 +27,7 @@
                                 <!-- Cambiar cantidad -->
                                  {% for key, value in quantities.items %}
                                     {% if key == producto.id|slugify %}
-                                        <input type="number" class="form-control me-2" value="{{ value }}" min="1" style="width: 80px;" id="qty-cart">
+                                        <input type="number" class="form-control me-2" value="{{ value }}" min="1" style="width: 80px;" id="select{{producto.id}}">
                                     {% endif %}
                                  {% endfor %}
                                 
@@ -35,6 +35,7 @@
                                 <!-- Eliminar producto -->
                                 <!-- <span class="ms-3">$20.00</span> -->
                             </div>
+                            <button type="button", data-index="{{producto.id}}" class="btn btn-secondary upadte-cart">Update</button>
                             <a href="#" class="text-danger"><i class="bi bi-trash-fill"></i></a>
                             
                         </div>
@@ -51,4 +52,36 @@
            
         </div>
   <br><br><br><br><br><br>      
+
+
+  <script>
+    // verificar si el boton de carrito esta presionado 
+    $(document).on('click', '.upadte-cart', function(e){
+        e.preventDefault();
+
+        var productid = $(this).data('index');
+        var productQty = $('#select' + productid).val();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_update" %}',
+            data: {
+                product_id: productid,
+                product_qty: productQty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                //document.getElementById("cart_quantity").
+                    //textContent = json.qty
+                    location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+                console.log("Error: " + errmsg);
+            },
+        });
+    })
+</script>
  {% endblock %}
