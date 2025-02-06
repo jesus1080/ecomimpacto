@@ -59,3 +59,22 @@ class Cart():
            del self.cart[product_id] 
 
         self.session.modified = True
+
+    def cart_total(self):
+        products_ids = self.cart.keys()
+
+        products = Product.objects.filter(id__in=products_ids)
+
+        quantities = self.cart
+
+        total = 0
+        for key, value in quantities.items():
+            key = int(key)
+            for product in products:
+                if product.id == key:
+                    #verificar si el producto esta a la venta
+                    if product.is_sale:
+                        total = total + (product.sale_price * value)
+                    else:
+                        total = total + (product.price * value)
+        return total

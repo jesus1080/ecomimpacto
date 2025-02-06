@@ -8,7 +8,8 @@ def cart_sumary(request):
     cart_products = cart.get_prods
     #cantidad de productos por unidad en el cart
     quantities = cart.get_quants
-    return render(request, "cart_sumary.html", {'products': cart_products, 'quantities': quantities} )
+    totals = cart.cart_total()
+    return render(request, "cart_sumary.html", {'products': cart_products, 'quantities': quantities, 'totals': totals} )
 
 def cart_add(request):
     # obtener el cart
