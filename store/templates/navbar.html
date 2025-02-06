@@ -8,9 +8,10 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'logaut' %}">Logaut</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'update_user' %}">Actualizar Pefil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'logaut' %}">Salir</a></li>
                 {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
                 {% endif %}
 
