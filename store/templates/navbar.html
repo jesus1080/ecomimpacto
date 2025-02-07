@@ -8,8 +8,18 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
                 
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'update_user' %}">Actualizar Pefil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'logaut' %}">Salir</a></li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Perfil</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'update_user'%}">Perfil</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="{% url 'update_user'%}">Perfil de Usuario</a></li>
+                        <li><a class="dropdown-item" href="{% url 'update_info'%}">Informacion Complementaria</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logaut' %}">Salir</a></li>
+                    </ul>
+                </li>
+                
                 {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
