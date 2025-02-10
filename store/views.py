@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
 from django import forms
+from django.db.models import Q
 
 
 def category(request, cate): 
@@ -132,3 +133,17 @@ def update_info(request):
         messages.success(request, "Debes ingresar ")
         return redirect('home')
   
+def search(request):
+    # determine if they filled otu the form
+    if request.method == "POST":
+        searched =  request.POST['searched']
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+
+        if not searched:
+           messages.success(request, "No existe producto con ese nombre...") 
+           return render(request, "search.html", {})
+        else:
+
+            return render(request, "search.html", {'searched': searched})
+    else:
+        return render(request, "search.html", {})
