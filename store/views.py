@@ -7,7 +7,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
 from django import forms
 from django.db.models import Q
-
+import json
+from cart.cart import Cart
 
 def category(request, cate): 
     try:
@@ -40,6 +41,17 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            #Traer los productos del carrito si los tiene
+            current_user = Profile.objects.get(user__id=request.user.id)
+            saved_cart = current_user.old_cart
+            #convertir el string en python dictionary
+            if saved_cart:
+                #usamos json para convertir
+                convert_cart = json.loads(saved_cart)
+                cart = Cart(request)
+                for key, value in convert_cart.items():
+                     cart.db_add(product=key, quantity=value)
+
             messages.success(request, ("Estas authenticado correctamente"))
             return redirect('home')
         else:

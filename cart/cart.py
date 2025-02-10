@@ -1,8 +1,10 @@
-from store.models import Product
+from store.models import Product, Profile
 
 class Cart():
     def __init__(self, request):
         self.session = request.session
+
+        self.request = request
 
         # obtener la llave de session actual si existe
         cart = self.session.get('session_key')
@@ -27,6 +29,18 @@ class Cart():
 
         self.session.modified = True
 
+        #tratar con el usuario conectado
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # convertir {'3':1, '2':4} to {"3":1, "2":4} cantidad y producto
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # guardar los items del carrito
+            current_user.update(old_cart=str(carty))
+
+
+
+
     def __len__(self):
         return len(self.cart)
     
@@ -49,6 +63,13 @@ class Cart():
 
         self.session.modified = True
 
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # convertir {'3':1, '2':4} to {"3":1, "2":4} cantidad y producto
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # guardar los items del carrito
+            current_user.update(old_cart=str(carty))
         thing = self.cart
         return thing
     
@@ -59,6 +80,14 @@ class Cart():
            del self.cart[product_id] 
 
         self.session.modified = True
+
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # convertir {'3':1, '2':4} to {"3":1, "2":4} cantidad y producto
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # guardar los items del carrito
+            current_user.update(old_cart=str(carty))
 
     def cart_total(self):
         products_ids = self.cart.keys()
@@ -78,3 +107,24 @@ class Cart():
                     else:
                         total = total + (product.price * value)
         return total
+    
+    def db_add(self,product,quantity):
+        product_id = str(product)
+        product_qty = str(quantity)
+        if product_id in self.cart:
+            pass
+        else:
+            #self.cart[product_id] = {'price': str(product.price)}
+            self.cart[product_id] = int(product_qty)
+
+
+        self.session.modified = True
+
+        #tratar con el usuario conectado
+        if self.request.user.is_authenticated:
+            current_user = Profile.objects.filter(user__id=self.request.user.id)
+            # convertir {'3':1, '2':4} to {"3":1, "2":4} cantidad y producto
+            carty = str(self.cart)
+            carty = carty.replace("\'", "\"")
+            # guardar los items del carrito
+            current_user.update(old_cart=str(carty))
