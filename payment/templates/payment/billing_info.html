@@ -5,8 +5,8 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Verifica Tu Orden</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                    <h1 class="display-4 fw-bolder">Facturacion</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Ingresa tu Informacion para el pago...</p>
                 </div>
             </div>
         </header>
@@ -46,15 +46,33 @@
                                   Informacion De Envio
                                 </div>
                                 <div class="card-body">
-                                  <form method="POST" action="{% url 'billing_info' %}" >
-                                    {% csrf_token %}
-                                  {{ shipping_form.as_p }}
+                             
+                                  Nombre: {{ shipping_info.shipping_full_name }} <br>
+                                  Correo: {{ shipping_info.shipping_email }} <br>
+                                  Direccion: {{ shipping_info.shipping_address1 }} <br>
+                                  Telefono: {{ shipping_info.shipping_phone }} <br>
+                                  Ciudad: {{ shipping_info.shipping_city }} <br>
+                                  Estado: {{ shipping_info.shipping_state }} <br>
+                                  Codigo: {{ shipping_info.shipping_zipcode }} <br>
+                                  <br>
+                                  <a href="{% url 'checkout' %}" class="btn btn-outline-secondary">Actualizar Envio</a>
+                                  
+                                </div>
+                              </div>
+
+                              <br>
+                              <div class="card">
+                                <div class="card-header">
+                                  Informacion De Facturacion
+                                </div>
+                                <div class="card-body">
+                                    {{billing_form.as_p}}
                                   
                                 </div>
                               </div>
                               <br>
-                              <button type="submit" class="btn btn-secondary">Continuar a Facturacion</button>
-                            </form>
+                              <a href="#" class="btn btn-secondary">Pagar Ahora</a>
+                            
                         </div>
                 </div>        
             </div>
@@ -64,5 +82,4 @@
   <br><br><br><br><br><br>      
 
 
-  
  {% endblock %}

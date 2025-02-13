@@ -18,3 +18,13 @@ class ShippingForm(forms.ModelForm):
                   'shipping_country', 'shipping_phone']
         exclude = ['user']
         
+class PaymentForm(forms.Form):
+    card_name = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nombre Tarjeta'}), required=True)
+    card_number = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Numero Tarjeta'}), required=True)
+    card_exp_date = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Fecha Exp De Tarjeta'}), required=True)
+    card_cvv_number = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Numero Cvv '}), required=True)
+    card_address = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Direccion De Tarjeta'}), required=True)
+    card_city = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Ciudad Tarjeta'}), required=True)
+    card_state = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Departamento Tarjeta'}), required=True)
+    card_zipcode = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Codigo Postal de la ciu'}), required=True)
+    card_country = forms.CharField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Pais de tarjeta'}), required=True)
