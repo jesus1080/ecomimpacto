@@ -1,0 +1,122 @@
+{% extends 'base.html'%}
+
+{% block content %}
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Verifica Tu Orden</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                </div>
+            </div>
+        </header>
+        <br><br><br>
+            <div class="container">
+                <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                  Resumen Del Pedido
+                                </div>
+                                <div class="card-body">
+                                    
+                                    {% for producto in products %}
+                                        {{producto.name}}:
+                                        ${{producto.price}}
+                                        <br>
+                                        <small>Cantidad:
+                                        {% for key, value in quantities.items %}
+                                            {% if key == producto.id|slugify %}
+                                                {{ value }}
+                                            {% endif %}
+                                        {% endfor %}</small>
+                                        <br><br>
+                                    {% endfor %}
+
+                                    <br>
+                                    <strong>Total: ${{totals}}</strong>
+                                    <br><br>
+                                    <a href="{% url 'cart_sumary' %}" class="btn btn-sm btn-outline-secondary">Actualizar Pedido</a>
+                                  
+                                </div>
+                              </div>
+                              <br><br>
+                              <div class="card">
+                                <div class="card-header">
+                                  Informacion De Envio
+                                </div>
+                                <div class="card-body">
+                                  {{ shipping_form.as_p }}
+                                </div>
+                              </div>
+                              <br>
+                              <a href="#" class="btn btn-secondary">Continuar a Facturacion</a>
+                        </div>
+                </div>        
+            </div>
+            <!-- Total y botón de compra -->
+           
+        
+  <br><br><br><br><br><br>      
+
+
+  <script>
+    // actualizar cantidad de producto
+    $(document).on('click', '.upadte-cart', function(e){
+        e.preventDefault();
+
+        var productid = $(this).data('index');
+        var productQty = $('#select' + productid).val();
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_update" %}',
+            data: {
+                product_id: productid,
+                product_qty: productQty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                //document.getElementById("cart_quantity").
+                    //textContent = json.qty
+                    location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+                console.log("Error: " + errmsg);
+            },
+        });
+    })
+
+    // eliminar producto del carrito
+    $(document).on('click', '.delete-product', function(e){
+        e.preventDefault();
+
+        var productid = $(this).data('index');
+       
+        $.ajax({
+            type: 'POST',
+            url: '{% url "cart_delete" %}',
+            data: {
+                product_id: productid,
+                
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                //console.log(json)
+                //document.getElementById("cart_quantity").
+                    //textContent = json.qty
+                    location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+                console.log("Error: " + errmsg);
+            },
+        });
+    })
+</script>
+ {% endblock %}
