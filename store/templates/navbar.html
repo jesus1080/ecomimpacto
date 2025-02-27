@@ -20,7 +20,15 @@
                         <li><a class="dropdown-item" href="{% url 'logaut' %}">Salir</a></li>
                     </ul>
                 </li>
-                
+                    {% if user.is_superuser %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pedidos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'shipped_dash'%}">Ordenes Enviadas</a></li>
+                            <li><a class="dropdown-item" href="{% url 'not_shipped_dash'%}">Ordenes Por Enviar</a></li>    
+                        </ul>
+                    </li>
+                    {% endif %}
                 {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>
