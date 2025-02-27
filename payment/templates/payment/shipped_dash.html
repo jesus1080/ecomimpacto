@@ -17,17 +17,25 @@
                         <th scope="col">Email_Comprador</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Direccion</th>
-                        
+                        <th scope="col">Estado</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for item in orders %}
                       <tr>
-                        <td>{{item.id}}</td>
+                        <td><a href="{% url 'orders' item.id %}">{{item.id}}</a></td>
                         <td>${{item.amount_paid}}</td>
                         <td>{{item.email}}</td>
-                        <td>{{item.date_ordered}}</td>
+                        <td>{{item.date_shipped}}</td>
                         <td>{{item.shipping_address}}</td>
+                        <td>
+                          <form action="" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="shipping_status" value="false">
+                            <input type="hidden" name="num" value="{{item.id}}">
+                            <button type="submit" class="btn btn-danger btn-sm">No-Enviado</button>
+                          </form>
+                        </td>
                       </tr>
                       {% endfor %}
                     </tbody>
