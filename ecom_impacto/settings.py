@@ -15,6 +15,7 @@ SECRET_KEY = 'django-insecure-fwlvc$dzmj-%)cn$j(ai%*+&at+dtgiq-5xpdhhdbpho7ig)9v
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CSRF_TRUSTED_ORIGINS = []
 
 
 # Application definition
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'cart',
     'payment',
+    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -39,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecom_impacto.urls'
@@ -121,6 +124,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = ['static/']
 
 # Directorio para img
+
+# aqui whitenoise static stuff
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
