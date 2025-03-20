@@ -71,14 +71,12 @@ WSGI_APPLICATION = 'ecom_impacto.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': os.environ['DB_PASSWORD_YO'],
-        'HOST':'turntable.proxy.rlwy.net',
-        'PORT':'39266',
+        'NAME': 'tienda_imp',
+        'USER': 'admin_imp',
+        'PASSWORD': 'lucia1080.',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
